@@ -37,18 +37,20 @@ OTHER DEALINGS IN THE SOFTWARE.
 #ifndef DS18B20_H
 #define DS18B20_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <xc.h>
-#include <p18f25k20.h>
+#include "mcc_generated_files/mcc.h"
+
 
 // This configuration is required to make a PIC be in open drain 
-#define BUSDIR LATAbits.LA5 // Set direction: input or output
-#define BUSOUT TRISAbits.RA5 // Set output: high or low 
-#define BUSIN PORTAbits.RA5 // Read input 
+//#define BUSDIR LATAbits.LA5   // Set direction: input or output
+//#define BUSOUT TRISAbits.RA5  // Set output: high or low 
+//#define BUSIN  PORTAbits.RA5  // Read input 
 
-#define _XTAL_FREQ  8000000
+#define BUSDIR IO_W1T0_LAT
+#define BUSOUT IO_W1T0_TRIS
+#define BUSIN  IO_W1T0_PORT
+
+
+//#define _XTAL_FREQ  8000000  // Define in mcc_generated_files/device_config.h
 
 // Available Functions:
 float OneWireTemp(void); // Returns the temperature in celsius 

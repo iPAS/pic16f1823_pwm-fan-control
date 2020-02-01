@@ -48,7 +48,6 @@ void OneWireHigh(void); // sets the bus high
 void OneWireRelease(void); // releases the bus 
 
 
-
 float OneWireTemp(){
     
     OneWireReset(); // Reset Pulse 

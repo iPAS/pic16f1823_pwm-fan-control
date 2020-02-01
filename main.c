@@ -42,6 +42,7 @@
 */
 
 #include "mcc_generated_files/mcc.h"
+#include "DS18B20.h"
 
 /*
                          Main application
@@ -66,23 +67,20 @@ void main(void)
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
 
-    
-    
+
     uint16_t i = 0;
-    
-    
+
     while (1)
     {
-        // Add your application code
+        float temp = OneWireTemp();
+        //sprintf(str,"Temp: %3.2fC", temp);
+        if (temp > 35.)
+        {
+            i += 10000;
+            EPWM_LoadDutyValue(i);
+        }
         
-//        __delay_ms(1000);
-//        IO_FAN_SetHigh();
-//        __delay_ms(1000);
-//        IO_FAN_SetLow();
-                
-        EPWM_LoadDutyValue(i);
-        i += 10000;
-        __delay_ms(1000);        
+        __delay_ms(1000);
     }
 }
 /**
