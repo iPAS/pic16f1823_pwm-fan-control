@@ -42,6 +42,22 @@
 */
 
 #include "mcc_generated_files/mcc.h"
+#include "DS18B20.h"
+
+
+int16_t current_temp;
+float current_celsius;
+
+
+/*
+ Local functions
+ */
+void reset_cm3(void) {
+    IO_RUN_SetLow();
+    IO_RUN_SetDigitalOutput();
+    __delay_ms(500);
+    IO_RUN_SetDigitalInput();
+}
 
 /*
                          Main application
@@ -66,23 +82,27 @@ void main(void)
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
 
-    
-    
+
     uint16_t i = 0;
-    
+    EPWM_LoadDutyValue(i);
+    int16_t previous_temp = OneWireTemp();  // In Celsius
+
+//    reset_cm3();
     
     while (1)
     {
-        // Add your application code
+        current_temp = OneWireTemp();
+        if ((current_temp >= previous_temp+1) || 
+            (current_temp <= previous_temp-1))
+        {
+            i = (i == 0)? 1 : i << 2;
+            EPWM_LoadDutyValue(i);
+            
+            previous_temp = current_temp;
+            current_celsius = countToCelsius(current_temp);
+        }
         
-//        __delay_ms(1000);
-//        IO_FAN_SetHigh();
-//        __delay_ms(1000);
-//        IO_FAN_SetLow();
-                
-        EPWM_LoadDutyValue(i);
-        i += 10000;
-        __delay_ms(1000);        
+        __delay_ms(1000);
     }
 }
 /**
