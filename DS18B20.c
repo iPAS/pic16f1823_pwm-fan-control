@@ -30,78 +30,68 @@ IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
- 
- 
  */
- 
- #include "DS18B20.h"
 
-// Available Functions:
-float OneWireTemp(void); // Returns the temperature in celsius 
-unsigned int OneWireReset(void); // Sends a reset pulse to the sensor 
-void OneWireWriteBit(unsigned char); // write a single bit to the OneWire
-unsigned char OneWireReadBit(void); // reads a single bit 
-void OneWireWriteByte(unsigned char); // writes a byte 
-unsigned char OneWireReadByte(void); // reads a byte 
-unsigned char OneWireRead(void); // reads the current status of the bus
-void OneWireHigh(void); // sets the bus high
-void OneWireRelease(void); // releases the bus 
+#include "DS18B20.h"
 
 
-float OneWireTemp(){
-    
+int16_t OneWireTemp() {
     OneWireReset(); // Reset Pulse 
     OneWireWriteByte(0xCC); // Issue skip ROM command (CCh)
-    OneWireWriteByte(0x44); // Convert T command (44h)
-    while(!BUSIN); // DS will hold line low while making measurement
+    OneWireWriteByte(0x44); // Convert T command (44h), start conversion
+    while (!BUSIN); // DS will hold line low while making measurement
     OneWireReset(); // Start new command sequence 
     OneWireWriteByte(0xCC); // Issue skip ROM command 
     OneWireWriteByte(0xBE); // Read Scratchpad (BEh) - 15 bits
-    unsigned char LSB = OneWireReadByte();
-    unsigned char MSB = OneWireReadByte();
+    uint16_t lsb = OneWireReadByte();
+    uint16_t msb = OneWireReadByte();
     OneWireReset(); // Stop Reading 
-    unsigned int data = MSB;
-    float temperature = (data << 8) | LSB;
-    return (temperature/16); 
-   
+
+    return (msb << 8) | lsb;
 }
 
-void OneWireHigh(){
+float countToCelsius(int16_t count) {
+    // XC Global options -> XC Compiler -> C Standard = C 90
+    // XC Global options -> XC Linker -> Memory Model -> Size of Float = 24-bit
+    return count / 16.0f;
+}
+
+void OneWireHigh() {
     BUSDIR = 0; // Set as output
     BUSOUT = 1; // Set high 
 }
 
-void OneWireRelease(){
+void OneWireRelease() {
     BUSDIR = 0; // Set as output
     BUSOUT = 0; // Set low 
 }
 
-unsigned char OneWireRead(){
+unsigned char OneWireRead() {
     return BUSIN;
 }
 
-unsigned int OneWireReset(){
+unsigned int OneWireReset() {
     OneWireRelease();
-    __delay_us(240); // 480uS Delay
-    __delay_us(240);
+    __delay_us(480); // 480uS Delay
+//    __delay_us(240);
+//    __delay_us(240);
     OneWireHigh();
     __delay_us(70); // wait 70 uS before reading
     unsigned int OW = OneWireRead(); // check for OneWire
-    __delay_us(205); // 410 uS delay
-    __delay_us(205);
+    __delay_us(410); // 410 uS delay
+//    __delay_us(205);
+//    __delay_us(205);
     OneWireHigh(); // give bus back to OneWire
-    return OW; 
+    return OW;
 }
 
-
-void OneWireWriteBit(unsigned char b){
-    if(b){
+void OneWireWriteBit(unsigned char b) {
+    if (b) {
         OneWireRelease();
         __delay_us(6); // wait 6uS
         OneWireHigh();
         __delay_us(64); // wait 64uS
-    }
-    else{
+    } else {
         OneWireRelease();
         __delay_us(60); // wait 60uS
         OneWireHigh();
@@ -109,7 +99,7 @@ void OneWireWriteBit(unsigned char b){
     }
 }
 
-unsigned char OneWireReadBit(){
+unsigned char OneWireReadBit() {
     OneWireRelease();
     __delay_us(6); // wait 6uS
     OneWireHigh();
@@ -119,18 +109,18 @@ unsigned char OneWireReadBit(){
     return out;
 }
 
-void OneWireWriteByte(unsigned char b){
-    for(int i = 0; i < 8; i++){
+void OneWireWriteByte(unsigned char b) {
+    for (int i = 0; i < 8; i++) {
         OneWireWriteBit(b & 0x01); // send LS bit first 
         b = b >> 1;
     }
 }
 
-unsigned char OneWireReadByte(void){
-    unsigned char out; 
-    for(int i = 0; i < 8; i++){ // read in LS bit first
+unsigned char OneWireReadByte(void) {
+    unsigned char out;
+    for (int i = 0; i < 8; i++) { // read in LS bit first
         out = out >> 1; // get out ready for next bit
-        if(OneWireReadBit() & 0x01) // if its a one 
+        if (OneWireReadBit() & 0x01) // if its a one 
             out = out | 0x80; // place a 1 
     }
     return out;

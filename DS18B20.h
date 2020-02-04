@@ -29,9 +29,7 @@ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
- 
- 
+OTHER DEALINGS IN THE SOFTWARE. 
  */
 
 #ifndef DS18B20_H
@@ -53,14 +51,16 @@ OTHER DEALINGS IN THE SOFTWARE.
 //#define _XTAL_FREQ  8000000  // Define in mcc_generated_files/device_config.h
 
 // Available Functions:
-float OneWireTemp(void); // Returns the temperature in celsius 
-unsigned int OneWireReset(void); // Sends a reset pulse to the sensor 
-void OneWireWriteBit(unsigned char); // write a single bit to the OneWire
-unsigned char OneWireReadBit(void); // reads a single bit 
-void OneWireWriteByte(unsigned char); // writes a byte 
-unsigned char OneWireReadByte(void); // reads a byte 
-unsigned char OneWireRead(void); // reads the current status of the bus
-void OneWireHigh(void); // sets the bus high
-void OneWireRelease(void); // releases the bus 
+int16_t OneWireTemp(void);              // Returns the temperature in count, fixed 4-bit-decimal point
+float countToCelsius(int16_t count);    // Convert a count value to celsius
+
+unsigned int OneWireReset(void);        // Sends a reset pulse to the sensor 
+void OneWireWriteBit(unsigned char);    // write a single bit to the OneWire
+unsigned char OneWireReadBit(void);     // reads a single bit 
+void OneWireWriteByte(unsigned char);   // writes a byte 
+unsigned char OneWireReadByte(void);    // reads a byte 
+unsigned char OneWireRead(void);        // reads the current status of the bus
+void OneWireHigh(void);                 // sets the bus high
+void OneWireRelease(void);              // releases the bus 
 
 #endif // DS18B20_H
