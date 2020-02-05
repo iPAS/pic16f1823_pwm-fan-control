@@ -27,7 +27,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <xc.h>
-#include "../i2c_driver.h"
 
 /**
   Section: Macro Declarations

@@ -21,10 +21,11 @@
 */
 
 #include <xc.h>
+#include "../i2c_driver.h"
 #include "i2c_slave.h"
 
 #define I2C1_SLAVE_ADDRESS 48 
-#define I2C1_SLAVE_MASK    0
+#define I2C1_SLAVE_MASK    255
 
 /**
  Section: Global Variables

@@ -43,15 +43,18 @@
 
 #include "mcc_generated_files/mcc.h"
 #include "DS18B20.h"
+#include "mcc_generated_files/drivers/i2c_slave.h"
 
 
 int16_t current_temp;
 float current_celsius;
 
 
-/*
- Local functions
- */
+/******************************************************************************
+ * Local functions
+ ******************************************************************************/
+
+
 void reset_cm3(void) {
     IO_RUN_SetLow();
     IO_RUN_SetDigitalOutput();
@@ -59,8 +62,18 @@ void reset_cm3(void) {
     IO_RUN_SetDigitalInput();
 }
 
-/*
-                         Main application
+void show_error_led(void) {
+    while (1) {
+        EPWM_LoadDutyValue(0x1FFF);
+        __delay_ms(1000);
+        EPWM_LoadDutyValue(0);
+        __delay_ms(1000);
+    }
+}
+
+
+/**
+ * Main application
  */
 void main(void)
 {
@@ -87,6 +100,15 @@ void main(void)
     EPWM_LoadDutyValue(i);
     int16_t previous_temp = OneWireTemp();  // In Celsius
 
+    // An examples in https://www.microchip.com/forums/m1125901.aspx
+    //
+    i2c_driver_open();
+    i2c_slave_open();
+    i2c_slave_enable();
+    
+    i2c_slave_write(0x55);
+    
+    
 //    reset_cm3();
     
     while (1)

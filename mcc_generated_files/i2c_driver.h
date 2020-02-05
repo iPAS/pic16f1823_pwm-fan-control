@@ -20,14 +20,13 @@
     TERMS.
 */
 
-#ifndef I2C_DRIVER_H
-#define I2C_DRIVER_H
+#ifndef __I2C_DRIVER_H
+#define __I2C_DRIVER_H
 
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
-
 
 #define INLINE  inline 
 
@@ -78,4 +77,4 @@ INLINE void i2c_driver_setI2cISR(interruptHandler handler);
 void (*i2c_driver_busCollisionISR)(void);
 void (*i2c_driver_i2cISR)(void);
 
-#endif // I2C_DRIVER_H
+#endif // __I2C_DRIVER_H

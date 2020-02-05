@@ -24,8 +24,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <xc.h>
-#include "device_config.h"
+#include "mcc.h"
 #include "i2c_driver.h"
 
 #pragma warning disable 520        
