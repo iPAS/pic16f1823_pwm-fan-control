@@ -42,8 +42,8 @@
 */
 
 #include "mcc_generated_files/mcc.h"
-#include "DS18B20.h"
 #include "mcc_generated_files/drivers/i2c_slave.h"
+#include "DS18B20.h"
 
 
 int16_t current_temp;
@@ -100,16 +100,21 @@ void main(void)
     EPWM_LoadDutyValue(i);
     int16_t previous_temp = OneWireTemp();  // In Celsius
 
-    // An examples in https://www.microchip.com/forums/m1125901.aspx
-    //
-    i2c_driver_open();
+    
+    // Discussion                   > https://www.microchip.com/forums/m1125901.aspx
+    // Example from Microchip       > https://www.microchip.com/wwwAppNotes/AppNotes.aspx?appnote=en011798
+    // Better MCC I2C-Slave example > https://gitlab.johngrenard.com/JohnGrenard/kegmaster_satellite
+    if (!i2c_driver_open())
+    {
+        show_error_led();
+    }
     i2c_slave_open();
-    i2c_slave_enable();
+    i2c_driver_start();
+    i2c_driver_restart();
+    mssp_enableIRQ();  // Enable MSSP (I2C) Interrupts)
+
     
-    i2c_slave_write(0x55);
-    
-    
-//    reset_cm3();
+    //reset_cm3();
     
     while (1)
     {

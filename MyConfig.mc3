@@ -1,4 +1,4 @@
-<config configVersion="1.1" device="PIC16F1823" coreVersion="4.75">
+<config configVersion="1.1" device="PIC16F1823" coreVersion="4.85.0">
    <usedClasses class="java.util.HashMap">
       <entry>
          <string>System Module</string>
@@ -25,12 +25,12 @@
          <string>class com.microchip.mcc.foundationservices.modules.softwaredriver.I2CSlave.I2CSLAVE</string>
       </entry>
       <entry>
-         <string>ECCP</string>
-         <string>class com.microchip.mcc.mcu8.modules.eccp.ECCP</string>
-      </entry>
-      <entry>
          <string>RESET</string>
          <string>class com.microchip.mcc.mcu8.systemManager.reset.RESET</string>
+      </entry>
+      <entry>
+         <string>ECCP</string>
+         <string>class com.microchip.mcc.mcu8.modules.eccp.ECCP</string>
       </entry>
       <entry>
          <string>Interrupt Module</string>
@@ -42,8 +42,8 @@
       </entry>
    </usedClasses>
    <usedLibraries class="java.util.ArrayList">
-      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.foundationservices.library.FoundationServicesLibrary" version="0.1.31"/>
       <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.mcu8.Mcu8PeripheralLibrary" version="1.78.0"/>
+      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.foundationservices.library.FoundationServicesLibrary" version="0.1.31"/>
    </usedLibraries>
    <tokenMap class="java.util.HashMap">
       <entry>
@@ -719,12 +719,12 @@
          <value>disabled</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="I2CSLAVE" name="pubSubI2CSLAVE_I2C/Functions"/>
-         <value>1631.0813571964022</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="ECCP" registerAlias="CCPCON" settingAlias="CCPM" alias="off/reset"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="I2CSLAVE" name="pubSubI2CSLAVE_I2C/Functions"/>
+         <value>7653.953343360995</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="WPUA" settingAlias="WPUA4"/>
@@ -2985,20 +2985,20 @@
          <hash>8293d01650f4d6e132ff891dca6e4043647276c2ba64a1b826ca6d2bbcdef972</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files/epwm.c</file>
-         <hash>11e0d73bac666718344684bacd84a1077e0ef5768b00806cc935a5c63d05777f</hash>
-      </entry>
-      <entry>
          <file>mcc_generated_files/tmr2.h</file>
          <hash>1282fbe31177074e7468d64322992639afbbf1971ed01a4e269615631fb88b23</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files/epwm.h</file>
-         <hash>0c09082e957c30aebd5dff730b7eac0c4a555e946a21ddbf383dbcc6c1683dbf</hash>
+         <file>mcc_generated_files/epwm.c</file>
+         <hash>11e0d73bac666718344684bacd84a1077e0ef5768b00806cc935a5c63d05777f</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/tmr2.c</file>
          <hash>f52c7b2e49e56fc4cf778bf0d403f1d3e6abe113ae9c6f96752bf97217d5fec3</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files/epwm.h</file>
+         <hash>0c09082e957c30aebd5dff730b7eac0c4a555e946a21ddbf383dbcc6c1683dbf</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/device_config.h</file>
