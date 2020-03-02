@@ -101,6 +101,19 @@ void main(void)
     int16_t previous_temp = OneWireTemp();  // In Celsius
 
     
+    
+    
+    // Full-speed fan only!!!
+//    while (1)
+//    {
+//        EPWM_LoadDutyValue(0xFFFF);
+//        __delay_ms(1000);
+//    }
+    
+    
+    
+    
+    
     // Discussion                   > https://www.microchip.com/forums/m1125901.aspx
     // Example from Microchip       > https://www.microchip.com/wwwAppNotes/AppNotes.aspx?appnote=en011798
     // Better MCC I2C-Slave example > https://gitlab.johngrenard.com/JohnGrenard/kegmaster_satellite
