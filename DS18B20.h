@@ -52,15 +52,15 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 // Available Functions:
 int16_t OneWireTemp(void);              // Returns the temperature in count, fixed 4-bit-decimal point
-float countToCelsius(int16_t count);    // Convert a count value to celsius
+float   countToCelsius(int16_t count);  // Convert a count value to celsius
 
-unsigned int OneWireReset(void);        // Sends a reset pulse to the sensor 
-void OneWireWriteBit(unsigned char);    // write a single bit to the OneWire
-unsigned char OneWireReadBit(void);     // reads a single bit 
-void OneWireWriteByte(unsigned char);   // writes a byte 
-unsigned char OneWireReadByte(void);    // reads a byte 
-unsigned char OneWireRead(void);        // reads the current status of the bus
-void OneWireHigh(void);                 // sets the bus high
-void OneWireRelease(void);              // releases the bus 
+uint8_t OneWireReset(void);             // Sends a reset pulse to the sensor 
+void    OneWireWriteBit(uint8_t);       // write a single bit to the OneWire
+uint8_t OneWireReadBit(void);           // reads a single bit 
+void    OneWireWriteByte(uint8_t);      // writes a byte 
+uint8_t OneWireReadByte(void);          // reads a byte 
+uint8_t OneWireRead(void);              // reads the current status of the bus
+void    OneWireHigh(void);              // sets the bus high
+void    OneWireRelease(void);           // releases the bus 
 
 #endif // DS18B20_H

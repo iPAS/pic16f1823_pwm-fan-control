@@ -66,18 +66,18 @@ void OneWireRelease() {
     BUSOUT = 0; // Set low 
 }
 
-unsigned char OneWireRead() {
+uint8_t OneWireRead() {
     return BUSIN;
 }
 
-unsigned int OneWireReset() {
+uint8_t OneWireReset() {
     OneWireRelease();
     __delay_us(480); // 480uS Delay
 //    __delay_us(240);
 //    __delay_us(240);
     OneWireHigh();
     __delay_us(70); // wait 70 uS before reading
-    unsigned int OW = OneWireRead(); // check for OneWire
+    uint8_t OW = OneWireRead(); // check for OneWire
     __delay_us(410); // 410 uS delay
 //    __delay_us(205);
 //    __delay_us(205);
@@ -85,7 +85,7 @@ unsigned int OneWireReset() {
     return OW;
 }
 
-void OneWireWriteBit(unsigned char b) {
+void OneWireWriteBit(uint8_t b) {
     if (b) {
         OneWireRelease();
         __delay_us(6); // wait 6uS
@@ -99,29 +99,29 @@ void OneWireWriteBit(unsigned char b) {
     }
 }
 
-unsigned char OneWireReadBit() {
+uint8_t OneWireReadBit() {
     OneWireRelease();
     __delay_us(6); // wait 6uS
     OneWireHigh();
     __delay_us(9); // wait 9uS
-    unsigned char out = OneWireRead();
+    uint8_t out = OneWireRead();
     __delay_us(55); // wait 55uS
     return out;
 }
 
-void OneWireWriteByte(unsigned char b) {
+void OneWireWriteByte(uint8_t b) {
     for (int i = 0; i < 8; i++) {
-        OneWireWriteBit(b & 0x01); // send LS bit first 
-        b = b >> 1;
+        OneWireWriteBit(b & 0x01u); // send LS bit first 
+        b >>= 1;
     }
 }
 
-unsigned char OneWireReadByte(void) {
-    unsigned char out;
+uint8_t OneWireReadByte(void) {
+    uint8_t out;
     for (int i = 0; i < 8; i++) { // read in LS bit first
-        out = out >> 1; // get out ready for next bit
-        if (OneWireReadBit() & 0x01) // if its a one 
-            out = out | 0x80; // place a 1 
+        out >>= 1; // get out ready for next bit
+        if (OneWireReadBit() & 0x01u) // if its a one 
+            out |= 0x80u; // place a 1 
     }
     return out;
 }
